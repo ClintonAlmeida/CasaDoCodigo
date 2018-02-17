@@ -45,6 +45,8 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	
 	public int getPaginas() {
 		return paginas;
 	}

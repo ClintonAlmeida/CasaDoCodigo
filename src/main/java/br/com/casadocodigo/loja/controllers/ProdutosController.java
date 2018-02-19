@@ -11,11 +11,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import be.com.casadocodigo.loja.validation.ProdutoValidation;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
+import br.com.casadocodigo.loja.infra.FileSaver;
 import br.com.casadocodigo.loja.models.Produto;
 import br.com.casadocodigo.loja.models.TipoPreco;
 
@@ -26,13 +28,16 @@ public class ProdutosController {
 	@Autowired
 	private ProdutoDAO produtoDAO;
 
+	@Autowired
+	private FileSaver file;
+	
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
 		binder.addValidators(new ProdutoValidation());
 	}
 	
 	@RequestMapping("/form")
-	public ModelAndView form() {
+	public ModelAndView form(Produto produto) {
 		ModelAndView view = new ModelAndView("produtos/form");
 		view.addObject("tipos", TipoPreco.values());
 
@@ -40,14 +45,18 @@ public class ProdutosController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public ModelAndView gravar(@Valid Produto produto, BindingResult bindingResult,
+	public ModelAndView gravar(@Valid Produto produto, MultipartFile sumario, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 
+		
 		if(bindingResult.hasErrors()) {
-			return form();
+			return form(produto);
 		}
 		
 		System.out.println(produto);
+		
+		String sumarioPath = file.write("arquivos-sumario", sumario);
+		produto.setSumarioPath(sumarioPath);
 		produtoDAO.gravar(produto);
 		
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso");

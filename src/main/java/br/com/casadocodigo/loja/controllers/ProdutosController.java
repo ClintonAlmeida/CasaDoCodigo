@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -46,6 +47,7 @@ public class ProdutosController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
+	@CacheEvict(value="produtoHome", allEntries=true)
 	public ModelAndView gravar(@Valid Produto produto, MultipartFile sumario, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 

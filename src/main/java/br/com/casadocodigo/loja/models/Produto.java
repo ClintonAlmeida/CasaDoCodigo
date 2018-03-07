@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -19,6 +20,8 @@ public class Produto {
 	private Integer id;
 	
 	private String titulo;
+	
+	@Length(max=2000)
 	private String descricao;
 	private int paginas;
 	

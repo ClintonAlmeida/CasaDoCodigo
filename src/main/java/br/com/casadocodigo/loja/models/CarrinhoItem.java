@@ -66,4 +66,6 @@ public class CarrinhoItem {
 		return this.getPreco().multiply(new BigDecimal(quantidade));
 	}
 	
+	
+	
 }

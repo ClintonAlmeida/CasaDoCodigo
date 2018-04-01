@@ -128,13 +128,14 @@
 			      <tfoot>
 			      
 			        <tr>
-			         <td colspan="3">
-			      <form action="${s:mvcUrl('PC#finalizar').build()}" method="post"> 
+			         <td colspan="5">
+			      <form:form servletRelativeAction="${s:mvcUrl('PC#finalizar').build()}" method="post"> 
 			          
 			          <input type="submit" class="checkout" name="checkout"
 			           value="Finalizar compra" />
 			          
-			      </form>
+
+			      </form:form>
 			           </td>
 
 			      </tfoot>
@@ -209,7 +210,6 @@
 				<!-- social-footer -->
 				<p class="footer-title">Receba as Novidades e Lançamentos</p>
 				<div id="form-newsletter">
-					<form
 						action=""
 						method="POST" id="ss-form" class="form-newsletter">
 						<ul>
